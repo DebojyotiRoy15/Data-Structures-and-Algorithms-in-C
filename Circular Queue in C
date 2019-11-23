@@ -1,0 +1,117 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node
+{
+    int data;
+    struct node *next;
+};
+
+struct node *front, *rear;
+
+void create();
+void enq();
+void deq();
+void display();
+
+int main()
+{
+    int i,p,q;
+    create();
+    while(1)
+    {
+        printf("***CIRCULAR QUEUE*** \n");
+        printf("1.Enqueue\n2.Dequeue\n3.Display\n4.Exit\n");
+        scanf("%d", &p);
+        switch(p)
+        {
+        case 1:
+            enq();
+            break;
+        case 2:
+            deq();
+            break;
+        case 3:
+            display();
+            break;
+        case 4:
+            exit(0);
+            break;
+        }
+    }
+    return 0;
+}
+
+void create()
+{
+    front=NULL;
+    rear=NULL;
+}
+
+void enq()
+{
+    int p;
+    struct node *ptr, *preptr;
+    printf("Enter value to be enqueued. \n");
+    scanf("%d", &p);
+    if(rear==NULL)
+    {
+        rear=(struct node*)malloc(sizeof(struct node));
+        rear->data=p;
+        front=rear;
+        rear->next=front;
+    }
+    else
+    {
+        ptr=(struct node*)malloc(sizeof(struct node));
+        rear->next=ptr;
+        ptr->data=p;
+        ptr->next=front;
+        rear=ptr;
+    }
+}
+
+void deq()
+{
+    struct node *ptr;
+    if(front==NULL)
+    {
+        printf("Queue is empty. \n");
+        return;
+    }
+    else if(front==rear && front!=NULL)
+    {
+        printf("The dequeued value is %d \n", front->data);
+        struct node *temp;
+        free(front);
+        free(rear);
+        front=NULL;
+    }
+    else if(front!=NULL)
+    {
+        printf("The dequeued value is %d \n", front->data);
+        ptr=front;
+        front=front->next;
+        free(ptr);
+    }
+}
+
+void display()
+{
+    struct node *ptr;
+    ptr=front;
+    if(front==NULL)
+    {
+        printf("The queue is empty. \n");
+        return;
+    }
+    else
+    {
+        while(ptr!=rear)
+        {
+            printf("%d \n", ptr->data);
+            ptr=ptr->next;
+        }
+        printf("%d \n", ptr->data);
+    }
+}
