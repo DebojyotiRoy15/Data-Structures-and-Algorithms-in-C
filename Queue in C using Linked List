@@ -1,0 +1,100 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node
+{
+    int data;
+    struct node* next;
+};
+
+struct node *front=NULL, *rear=NULL;
+
+void enq();
+void deq();
+void display();
+
+int main()
+{
+    int i,p,q;
+    while(1)
+    {
+        printf("***QUEUE*** \n");
+        printf("1.Enqueue\n2.Dequeue\n3.Display\n4.Exit \n");
+        scanf("%d", &p);
+        switch(p)
+        {
+        case 1:
+            enq();
+            break;
+        case 2:
+            deq();
+            break;
+        case 3:
+            display();
+            break;
+        case 4:
+            exit(0);
+        }
+    }
+    return 0;
+}
+
+void enq()
+{
+    struct node *ptr, *preptr;
+    int p;
+    printf("Enter value to be enqueued. \n");
+    scanf("%d", &p);
+    if(rear==NULL)
+    {
+        rear=(struct node*)malloc(sizeof(struct node));
+        rear->data=p;
+        rear->next=NULL;
+        front=rear;
+    }
+    else
+    {
+        ptr=(struct node*)malloc(sizeof(struct node));
+        ptr->data=p;
+        ptr->next=NULL;
+        rear->next=ptr;
+        rear=ptr;
+    }
+}
+
+void deq()
+{
+    struct node *ptr;
+    if(front==NULL)
+    {
+        printf("Queue is empty. \n");
+        return;
+    }
+    else
+    {
+        printf("The dequeued value is %d \n", front->data);
+        ptr=front;
+        front=front->next;
+        free(ptr);
+    }
+}
+
+void display()
+{
+    struct node *ptr;
+    ptr=front;
+    if(ptr==NULL)
+    {
+        printf("Queue is empty. \n");
+        return;
+    }
+    else
+    {
+        while(ptr!=rear)
+        {
+            printf("%d \n", ptr->data);
+            ptr=ptr->next;
+        }
+        printf("%d \n", ptr->data);
+    }
+}
