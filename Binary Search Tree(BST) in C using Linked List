@@ -14,11 +14,11 @@ void create();
 void inorder(struct node *);
 void insert();
 void search();
-void height();
+int height(struct node *);
 
 int main()
 {
-    int p;
+    int p, h;
     create();
     while(1)
     {
@@ -32,6 +32,10 @@ int main()
             break;
         case 3:
             search();
+            break;
+        case 4:
+            h=height(tree);
+            printf("The height of the B.S.T is %d \n", --h);
             break;
         case 5:
             inorder(tree);
@@ -116,5 +120,23 @@ void inorder(struct node *tree)
         inorder(tree->left);
         printf("%d ", tree->data);
         inorder(tree->right);
+    }
+}
+
+int height(struct node *tree)
+{
+    struct node *ptr;
+    ptr=tree;
+    int lheight, rheight;
+    if(ptr==NULL)
+        return 0;
+    else
+    {
+        lheight=height(tree->left);
+        rheight=height(tree->right);
+        if(lheight>rheight)
+            return (++lheight);
+        else
+            return (++rheight);
     }
 }
