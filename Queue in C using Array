@@ -1,0 +1,90 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 5
+int q[MAX];
+int front, rear;
+front =-1;
+rear=-1;
+
+void enq();
+void deq();
+void display();
+
+int main()
+{
+    int i,p,r;
+    while(1)
+    {
+        printf("***QUEUE*** \n");
+        printf("1.Enqueue\n2.Dequeue\n3.Display\n4.Exit\n");
+        scanf("%d", &p);
+        switch(p)
+        {
+        case 1:
+            enq();
+            break;
+        case 2:
+            deq();
+            break;
+        case 3:
+            display();
+            break;
+        case 4:
+            exit(0);
+        }
+    }
+    return 0;
+}
+
+void enq()
+{
+    int p;
+    printf("Enter value to be enqueued. \n");
+    scanf("%d", &p);
+    if(rear==MAX-1)
+    {
+        printf("Queue is full. \n");
+        return;
+    }
+    else
+    {
+        if (front==-1)
+        front=0;
+        rear++;
+        q[rear]=p;
+    }
+}
+
+void deq()
+{
+    if (front==-1 || front>rear)
+    {
+        printf("Queue is empty. \n");
+        return;
+    }
+    else
+    {
+        printf("The dequeued value is %d \n", q[front]);
+        front++;
+        if(front>rear)
+        {
+            front=rear=-1;
+            return;
+        }
+    }
+}
+
+void display()
+{
+    int i,p;
+    if(front==-1 || front>rear)
+    {
+        printf("Queue is empty. \n");
+        return;
+    }
+    for(i=front;i<=rear;i++)
+    {
+        printf("%d \n", q[i]);
+    }
+}
