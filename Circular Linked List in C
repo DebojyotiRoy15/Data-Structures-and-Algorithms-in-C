@@ -1,0 +1,278 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node{
+    int data;
+    struct node* next;
+};
+struct node *head=NULL;
+
+int nno,c;
+
+void create(int nno);
+void insertbeg();
+void insertend();
+void insertn();
+void deletebeg();
+void deleteend();
+void deleten();
+void display();
+int size();
+
+int main()
+{
+    int n,i,j,k,p;
+    while(1)
+    {
+        printf("1.Insert at beginning\n2.Insert at end\n3.Insert at nth\n4.Delete at beginning\n5.Delete end\n6.Delete nth\n7.Display\n8.Exit\n9.Create\n");
+        scanf("%d", &p);
+        switch(p)
+        {
+        case 1:
+            insertbeg();
+            break;
+        case 2:
+            insertend();
+            break;
+        case 3:
+            insertn();
+            break;
+        case 4:
+            deletebeg();
+            break;
+        case 5:
+            deleteend();
+            break;
+        case 6:
+            deleten();
+            break;
+        case 7:
+            display();
+            break;
+        case 8:
+            exit(0);
+        case 9:
+             printf("How many nodes of linked list? \n");
+             scanf("%d", &nno);
+             create(nno);
+        }
+    }
+    return 0;
+}
+
+void create(int nno)
+{
+    struct node *ptr, *newnode;
+    int p,i,r;
+    printf("Value of first node? \n");
+    scanf("%d", &p);
+    head=(struct node*)malloc(sizeof(struct node));
+    head->data=p;
+    head->next=NULL;
+    ptr=head;
+    for(i=1;i<nno;i++)
+    {
+        printf("Value of %d node? \n", i+1);
+        scanf("%d", &r);
+        newnode=(struct node*)malloc(sizeof(struct node));
+        newnode->data=r;
+        newnode->next=NULL;
+        ptr->next=newnode;
+        ptr=ptr->next;
+    }
+    ptr->next=head;
+
+}
+
+void insertbeg()
+{
+    if(head==NULL)
+    {
+        printf("The list is empty. \n");
+        return;
+    }
+    else{
+    struct node* ptr, *temp;
+    ptr=(struct node*)malloc(sizeof(struct node));
+    printf("Value of node? \n");
+    int p;
+    scanf("%d", &p);
+    temp=head;
+    while(temp->next!=head)
+    {
+        temp=temp->next;
+
+    }
+    temp->next=ptr;
+    ptr->data=p;
+    ptr->next=head;
+    head=ptr;
+}
+}
+
+void insertend()
+{
+    if(head==NULL)
+    {
+        printf("The list is empty. \n");
+        return;
+    }
+    else{
+    struct node *newnode, *ptr;
+    int r;
+    newnode=(struct node*)malloc(sizeof(struct node));
+    printf("Value of new node? \n");
+    scanf("%d", &r);
+    newnode->data=r;
+    newnode->next=head;
+    ptr=head;
+    while(ptr->next!=head)
+    {
+        ptr=ptr->next;
+    }
+    ptr->next=newnode;
+}
+}
+
+void deletebeg()
+{
+    if(head==NULL)
+    {
+        printf("The list is empty. \n");
+        return;
+    }
+    else{
+    struct node* ptr, *temp;
+    ptr=head;
+    temp=head;
+    while(temp->next!=head)
+    {
+        temp=temp->next;
+    }
+    temp->next=head->next;
+    head=head->next;
+    free(ptr);
+}
+}
+
+void deleteend()
+{
+    if(head==NULL)
+    {
+        printf("The list is empty. \n");
+        return;
+    }
+    else{
+    struct node *ptr, *preptr;
+    preptr=NULL;
+    ptr=head;
+    while(ptr->next!=head)
+    {
+        preptr=ptr;
+        ptr=ptr->next;
+    }
+    preptr->next=head;
+    free(ptr);
+}
+}
+void insertn()
+{
+    if(head==NULL)
+    {
+        printf("The list is empty. \n");
+        return;
+    }
+    else{
+    struct node *ptr, *preptr;
+    preptr=NULL;
+    ptr=head;
+    int p,i,n,t=0;
+    printf("Position? \n");
+    scanf("%d", &p);
+    printf("Value? \n");
+    scanf("%d", &n);
+    int x;
+    x=size();
+    if(p>x)
+    {
+        printf("Invalid position \n");
+        return;
+    }
+    else if(p<x){
+    for(i=1;i<p;i++)
+    {
+        preptr=ptr;
+        ptr=ptr->next;
+    }
+    struct node *newnode;
+    newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->data=n;
+    preptr->next=newnode;
+    newnode->next=ptr;
+}
+}
+}
+void deleten()
+{
+    if(head==NULL)
+    {
+        printf("The list is empty. \n");
+        return;
+    }
+    else{
+    struct node *ptr, *preptr;
+    ptr=head;
+    preptr=NULL;
+    int p,i,n;
+    printf("Position? \n");
+    scanf("%d", &p);
+    int x;
+    x=size();
+    if(p>x)
+    {
+        printf("Invalid position \n");
+        return;
+    }
+    else{
+    for(i=1;i<p;i++)
+    {
+        preptr=ptr;
+        ptr=ptr->next;
+    }
+    preptr->next=ptr->next;
+    free(ptr);
+    }
+}
+}
+
+void display()
+{
+    if(head==NULL)
+    {
+        printf("The list is empty. \n");
+        return;
+    }
+    else{
+    struct node *ptr;
+    ptr=head;
+    while(ptr->next!=head)
+    {
+        printf("%d \n", ptr->data);
+        ptr=ptr->next;
+    }
+    printf("%d \n ", ptr->data);
+    }
+}
+
+int size()
+{
+    struct node *ptr;
+    ptr=head;
+    c=0;
+    while(ptr->next!=head)
+    {
+        ptr=ptr->next;
+        c++;
+    }
+    return c;
+}
