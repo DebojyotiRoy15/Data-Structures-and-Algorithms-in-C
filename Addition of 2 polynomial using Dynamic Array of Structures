@@ -1,0 +1,86 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct pol
+{
+    int degree;
+    float coeff;
+};
+
+int main()
+{
+    int deg1, deg2,i,k=0;
+    printf("Degree of polynomial 1? \n");
+    scanf("%d", &deg1);
+    printf("Degree of polynomial 2? \n");
+    scanf("%d", &deg2);
+    struct pol *pol1;
+    struct pol *pol2;
+    struct pol *sum;
+    sum=(struct pol*)malloc(sizeof(struct pol)*deg1);
+    pol1=(struct pol*)malloc(sizeof(struct pol)*deg1);
+    pol2=(struct pol*)malloc(sizeof(struct pol)*deg2);
+    printf("Enter polynomial 1. \n");
+    for(i=0;i<=deg1;i++)
+    {
+        printf("Coefficient of x^%d? \n", i);
+        scanf("%f", &pol1[i].coeff);
+        pol1[k].degree=k;
+        k++;
+    }
+    printf("The polynomial 1 is: \n");
+    for(i=deg1;i>=0;i--)
+    {
+        if(i!=deg1 && i!=0)
+        printf("%0.1fx^%d +", pol1[i].coeff, pol1[i].degree);
+        else if(i==deg1)
+            printf("%0.1fx^%d +", pol1[i].coeff, pol1[i].degree);
+        else if(i==0)
+            printf("%0.1fx^%d", pol1[i].coeff, pol1[i].degree);
+    }
+    printf("\n Enter polynomial 2: \n");
+    k=0;
+    for(i=0;i<=deg2;i++)
+    {
+        printf("Coefficient of x^%d? \n", i);
+        scanf("%f", &pol2[i].coeff);
+        pol2[k].degree=k;
+        k++;
+    }
+    printf("The polynomial 2 is: \n");
+    for(i=deg2;i>=0;i--)
+    {
+        if(i!=deg2 && i!=0)
+        printf("%0.1fx^%d +", pol2[i].coeff, pol2[i].degree);
+        else if(i==deg2)
+            printf("%0.1fx^%d +", pol2[i].coeff, pol2[i].degree);
+        else if(i==0)
+            printf("%0.1fx^%d", pol2[i].coeff, pol2[i].degree);
+    }
+    //Finding sum
+    //Assume deg1>deg2
+    k=0;
+    for(i=0;i<=deg2;i++)
+    {
+        sum[i].coeff=pol1[i].coeff + pol2[i].coeff;
+        sum[i].degree=k;
+        k++;
+    }
+    for(i=deg2+1;i<=deg1;i++)
+    {
+        sum[i].coeff=pol1[i].coeff;
+        sum[i].degree=k;
+        k++;
+    }
+    printf("\n The polynomial sum is: \n");
+   for(i=deg1;i>=0;i--)
+    {
+        if(i!=deg1 && i!=0)
+        printf("%0.1fx^%d +", sum[i].coeff, sum[i].degree);
+        else if(i==deg1)
+            printf("%0.1fx^%d +", sum[i].coeff, sum[i].degree);
+        else if(i==0)
+            printf("%0.1fx^%d", sum[i].coeff, sum[i].degree);
+    }
+    return 0;
+}
