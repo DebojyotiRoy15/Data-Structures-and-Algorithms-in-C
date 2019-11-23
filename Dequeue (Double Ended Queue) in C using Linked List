@@ -1,0 +1,216 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node
+{
+    int data;
+    struct node *next;
+};
+
+struct node *front, *rear;
+
+void insertbeg();
+void insertend();
+void deletebeg();
+void deleteend();
+void display();
+
+int main()
+{
+    int p;
+    while(1)
+    {
+        printf("***DOUBLE ENDED QUEUE*** \n");
+        printf("1.Input restricted queue\n2.Exit Restricted Queue\n3.Exit\n");
+        scanf("%d", &p);
+        switch(p)
+        {
+        case 1:
+            inputr();
+            break;
+        case 2:
+            outputr();
+            break;
+        case 3:
+            exit(0);
+            break;
+        }
+    }
+    return 0;
+}
+
+void inputr()
+{
+    int p,r,i;
+    printf("INPUT RESTRICTED QUEUE \n");
+    while(1){
+    printf("1.Enqueue\n2.Delete at beginning. \n3.Delete at end.\n4.Display\n5.Exit\n");
+    scanf("%d", &p);
+    switch(p)
+    {
+    case 1:
+        insertend();
+        break;
+    case 2:
+        deletebeg();
+        break;
+    case 3:
+        deleteend();
+        break;
+    case 4:
+        display();
+        break;
+    case 5:
+        exit(0);
+    }
+}
+}
+
+void outputr()
+{
+    int p;
+    printf("EXIT RESTRICTED QUEUE. \n");
+    while(1){
+    printf("1.Insert at beginning \n2.Insert end\n3.Delete \n4.Display\n5.Exit\n");
+    scanf("%d", &p);
+    switch(p)
+    {
+    case 1:
+        insertbeg();
+        break;
+    case 2:
+        insertend();
+        break;
+    case 3:
+        deletebeg();
+        break;
+    case 4:
+        display();
+        break;
+    case 5:
+        exit(0);
+    }
+}
+}
+
+void insertbeg()
+{
+    int val;
+    printf("Value of node? \n");
+    scanf("%d", &val);
+    struct node *ptr;
+    ptr=(struct node*)malloc(sizeof(struct node));
+    if(front==NULL)
+    {
+       ptr->data=val;
+       ptr->next=NULL;
+       front=ptr;
+       rear=front;
+    }
+    else
+    {
+        ptr->data=val;
+        ptr->next=front;
+        front=ptr;
+    }
+}
+
+void insertend()
+{
+    int val;
+    printf("Value of node? \n");
+    scanf("%d", &val);
+    struct node *ptr;
+    ptr=(struct node*)malloc(sizeof(struct node));
+    ptr->data=val;
+    if(rear==NULL)
+    {
+        ptr->next=NULL;
+        rear=ptr;
+        front=ptr;
+    }
+    else
+    {
+        ptr->next=NULL;
+        rear->next=ptr;
+        rear=ptr;
+    }
+}
+
+void deletebeg()
+{
+    struct node *ptr;
+    if(front==NULL)
+    {
+        printf("Queue is empty. \n");
+        return;
+    }
+    else if(front==rear && front!=NULL)
+    {
+        printf("The deleted element is %d \n", front->data);
+        free(front);
+        free(rear);
+        front=NULL;
+        rear=NULL;
+    }
+    else if(front!=NULL && front!=rear)
+    {
+        printf("The deleted element is %d \n", front->data);
+        ptr=front;
+        front=front->next;
+        free(ptr);
+    }
+}
+
+void deleteend()
+{
+    struct node *ptr;
+    if(rear==NULL)
+    {
+        printf("Queue is empty. \n");
+        return;
+    }
+    else if(front==rear && front!=NULL)
+    {
+        printf("The deleted element is %d \n", rear->data);
+        free(front);
+        free(rear);
+        front=NULL;
+        rear=NULL;
+    }
+    else if(rear!=NULL && front!=rear)
+    {
+        struct node *temp, *pretemp;
+        pretemp=NULL;
+        temp=front;
+        printf("The deleted element is %d \n", rear->data);
+        while(temp->next!=NULL)
+        {
+            pretemp=temp;
+            temp=temp->next;
+        }
+        pretemp->next=NULL;
+        rear=pretemp;
+        free(temp);
+    }
+}
+
+void display()
+{
+    struct node *ptr;
+    ptr=front;
+    if(front==NULL ||rear==NULL)
+    {
+        printf("Queue is empty. \n");
+        return;
+    }
+    else
+    {
+        while(ptr!=rear)
+        {
+            printf("%d \n", ptr->data);
+            ptr=ptr->next;
+        }
+        printf("%d \n", ptr->data);
+    }
+}
