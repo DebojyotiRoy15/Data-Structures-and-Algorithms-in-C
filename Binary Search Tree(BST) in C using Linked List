@@ -186,7 +186,7 @@ struct node* delete(struct node *tree, int key)
             struct node *temp;
             temp=smallest(tree->right);
             tree->data=temp->data;
-            tree->right=delete(tree->right, temp->right);
+            tree->right=delete(tree->right, temp->data);
         }
     }
     return tree;
