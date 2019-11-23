@@ -15,10 +15,13 @@ void inorder(struct node *);
 void insert();
 void search();
 int height(struct node *);
+struct node* delete(struct node*, int);
+struct node* smallest(struct node*);
 
 int main()
 {
-    int p, h;
+    int p, h,val;
+    struct node *ptr;
     create();
     while(1)
     {
@@ -29,6 +32,11 @@ int main()
         {
         case 1:
             insert();
+            break;
+        case 2:
+            printf("Enter value to be deleted. \n");
+            scanf("%d", &val);
+            ptr=delete(tree,val);
             break;
         case 3:
             search();
@@ -139,4 +147,47 @@ int height(struct node *tree)
         else
             return (++rheight);
     }
+}
+
+struct node* smallest(struct node *tree)
+{
+    if(tree==NULL || tree->left==NULL)
+        return tree;
+    else
+        return smallest(tree->left);
+}
+
+struct node* delete(struct node *tree, int key)
+{
+    if(tree==NULL)
+        return NULL;
+    else if(key<tree->data)
+        tree->left=delete(tree->left, key);
+    else if(key>tree->data)
+        tree->right=delete(tree->right, key);
+    else
+    {
+        if(tree->left==NULL)
+        {
+            struct node *temp;
+            temp=tree->right;
+            free(tree);
+            return temp;
+        }
+        else if(tree->right==NULL)
+        {
+            struct node *temp;
+            temp=tree->left;
+            free(tree);
+            return temp;
+        }
+        else
+        {
+            struct node *temp;
+            temp=smallest(tree->right);
+            tree->data=temp->data;
+            tree->right=delete(tree->right, temp->right);
+        }
+    }
+    return tree;
 }
