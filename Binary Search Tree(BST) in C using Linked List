@@ -1,0 +1,120 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node
+{
+    int data;
+    struct node *left;
+    struct node *right;
+};
+
+struct node *tree;
+
+void create();
+void inorder(struct node *);
+void insert();
+void search();
+void height();
+
+int main()
+{
+    int p;
+    create();
+    while(1)
+    {
+        printf("***BINARY SEARCH TREE*** \n");
+        printf("1.Insert\n2.Delete\n3.Search\n4.Height\n5.Inorder traversal\n6.Exit\n");
+        scanf("%d", &p);
+        switch(p)
+        {
+        case 1:
+            insert();
+            break;
+        case 3:
+            search();
+            break;
+        case 5:
+            inorder(tree);
+            break;
+        case 6:
+            exit(0);
+        }
+    }
+    return 0;
+}
+
+void create()
+{
+    tree=NULL;
+}
+
+void insert()
+{
+    int val;
+    struct node *newnode, *ptr, *preptr=NULL;
+    printf("Enter value of new node. \n");
+    scanf("%d", &val);
+    newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->data=val;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    if(tree==NULL)
+    {
+        tree=(struct node*)malloc(sizeof(struct node));
+        tree->data=val;
+        tree->left=NULL;
+        tree->right=NULL;
+    }
+    else
+    {
+        ptr=(struct node*)malloc(sizeof(struct node));
+        ptr=tree;
+        while(ptr!=NULL)
+        {
+            preptr=ptr;
+            if(val<ptr->data)
+                ptr=ptr->left;
+            else
+                ptr=ptr->right;
+        }
+        if(val<preptr->data)
+            preptr->left=newnode;
+        else
+            preptr->right=newnode;
+    }
+}
+
+void search()
+{
+    int val,flag=0;
+    printf("Enter value to be searched. \n");
+    scanf("%d", &val);
+    struct node *ptr;
+    ptr=tree;
+    while(ptr!=NULL)
+    {
+        if(val<ptr->data)
+            ptr=ptr->left;
+        else if(val>ptr->data)
+            ptr=ptr->right;
+        else if(val==ptr->data)
+        {
+            flag=1;
+            break;
+        }
+    }
+    if(flag==1)
+        printf("%d present in B.S.T. \n", val);
+    else
+        printf("%d not present in B.S.T. \n", val);
+}
+
+void inorder(struct node *tree)
+{
+    if(tree!=NULL)
+    {
+        inorder(tree->left);
+        printf("%d ", tree->data);
+        inorder(tree->right);
+    }
+}
