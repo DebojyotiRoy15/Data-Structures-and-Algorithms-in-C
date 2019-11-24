@@ -1,3 +1,5 @@
+//Time complexity for average case scenario is O(nlogn), for best case scenario is O(logn) and for worst case is O(n^2)
+
 #include <stdio.h>
 #include <stdlib.h>
 #include<math.h>
@@ -36,6 +38,7 @@ int main()
 int partition(int a[], int low, int high)
 {
     int index,i,j,pivot;
+    //Generating random index for pivot
     index=rand()%(high-low+1)+low;
     swap(&a[index],&a[high]);
     pivot=a[high];
