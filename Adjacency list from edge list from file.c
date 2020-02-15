@@ -18,6 +18,7 @@ int main (void)
       if (fp!=NULL)
       {
                 fscanf(fp, "%d ", &vertices);  
+                struct node *graph = (struct node *)malloc(sizeof(struct node));
                 initialise(graph, vertices);
                 while(!feof(fp))
                 {
@@ -60,7 +61,7 @@ void display(struct node *graph, int n)
           while(temp!=NULL)
           {
                 printf("The source is %d \n", i);
-                printf("The destination is %d \n", temp->data);
+                printf("The destination is %d \n", temp->dest);
                 printf("The weight is %d \n", temp->v_weight);
                 printf("\n");
                 temp = temp->next;
